@@ -35,6 +35,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 
 	pkgTest "knative.dev/pkg/test"
+	testflags "knative.dev/pkg/test/flags"
 	"knative.dev/pkg/test/ingress"
 	"knative.dev/serving/pkg/apis/autoscaling"
 	resourcenames "knative.dev/serving/pkg/reconciler/revision/resources/names"
@@ -123,7 +124,7 @@ func generateTraffic(
 	stopChan chan struct{}) error {
 
 	target, err := getVegetaTarget(
-		ctx.clients.KubeClient, ctx.resources.Route.Status.URL.URL().Hostname(), pkgTest.Flags.IngressEndpoint, test.ServingFlags.ResolvableDomain)
+		ctx.clients.KubeClient, ctx.resources.Route.Status.URL.URL().Hostname(), testflags.Flags().IngressEndpoint, test.ServingFlags.ResolvableDomain)
 	if err != nil {
 		return fmt.Errorf("error creating vegeta target: %w", err)
 	}
